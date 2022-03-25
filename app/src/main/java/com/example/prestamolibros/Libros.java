@@ -53,7 +53,7 @@ public class Libros extends AppCompatActivity {
             jetCodigoGaleriaLibro.requestFocus();
         }else {
 
-            // Validacion de que el cliente y el vehiculo existe
+
             SqlConexion admin = new SqlConexion(this, "libreria.db", null, 1);
             SQLiteDatabase leer = admin.getReadableDatabase();
             Cursor libro = leer.rawQuery("select * from TblLibro where tituloLibro='" + nombreAutor + "'", null);
@@ -71,7 +71,7 @@ public class Libros extends AppCompatActivity {
 
             leer.close();
 
-            //Guardar riegistro
+
             if (validacion1 == true) {
                 if (validacion2 == true) {
                     SqlConexion admin1 = new SqlConexion(this, "libreria.db", null, 1);
@@ -86,7 +86,7 @@ public class Libros extends AppCompatActivity {
                     if (resp > 0) {
 
                         Toast.makeText(this, "Libro guardado", Toast.LENGTH_SHORT).show();
-                        //aqui empece yo
+
                         ContentValues registroAnulado = new ContentValues();
                         registroAnulado.put("codigoLibro", codigo);
                         registroAnulado.put("activo", "no");
@@ -108,7 +108,7 @@ public class Libros extends AppCompatActivity {
                 Toast.makeText(this, "El libro no se encuentra registrado", Toast.LENGTH_SHORT).show();
             }
         }   }
-    //metodo
+
 
 
 
