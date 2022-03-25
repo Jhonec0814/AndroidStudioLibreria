@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".MainActivity">
+
+<LinearLayout
+    android:id="@+id/linearLayout6"
+    android:layout_width="409dp"
+    android:layout_height="80dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="1dp"
+    android:orientation="horizontal"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/tvGaleriaLibros"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Galeria de Libros"
+        android:textSize="30dp" />
+</LinearLayout>
+
+<LinearLayout
+    android:id="@+id/linearLayout7"
+    android:layout_width="409dp"
+    android:layout_height="60dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="1dp"
+    android:layout_marginBottom="1dp"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+    app:layout_constraintVertical_bias="0.0">
+
+    <EditText
+        android:id="@+id/etCodigoGaleriaLibro"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Codigo Libro"
+        android:inputType="textPersonName"
+        android:text=""
+        android:textSize="23dp" />
+</LinearLayout>
+
+<LinearLayout
+    android:id="@+id/linearLayout8"
+    android:layout_width="409dp"
+    android:layout_height="60dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="1dp"
+    android:layout_marginBottom="1dp"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
+    app:layout_constraintVertical_bias="0.0">
+
+    <EditText
+        android:id="@+id/etTituloLibro"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Título"
+        android:inputType="textPersonName"
+        android:text=""
+        android:textSize="23dp" />
+</LinearLayout>
+
+<LinearLayout
+    android:id="@+id/linearLayout9"
+    android:layout_width="409dp"
+    android:layout_height="60dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="1dp"
+    android:layout_marginBottom="1dp"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
+    app:layout_constraintVertical_bias="0.0">
+
+    <EditText
+        android:id="@+id/etNombreAutor"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Nombre del Autor"
+        android:inputType="textPersonName"
+        android:text=""
+        android:textSize="23dp" />
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout11"
+        android:layout_width="409dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9"
+        app:layout_constraintVertical_bias="0.0">
+
+        <EditText
+            android:id="@+id/etGeneroLibro"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Género"
+            android:inputType="textPersonName"
+            android:text=""
+            android:textSize="23dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnAdicionarLibro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="40dp"
+        android:backgroundTint="#03B8B7"
+        android:text="Adicionar"
+        android:onClick="Guardar"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegresar"
+        app:layout_constraintEnd_toStartOf="@+id/btnAdicionarConsultar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout11"
+        tools:ignore="MissingConstraints,OnClick" />
+
+    <Button
+        android:id="@+id/btnAdicionarConsultar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="279dp"
+        android:backgroundTint="#1A4DCC"
+        android:text="Consultar"
+        android:onClick="Consulta_libro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAdicionarLibro"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout11"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnRegresar"
+        android:layout_width="126dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="141dp"
+        android:layout_marginBottom="203dp"
+        android:text="Regresar"
+        android:onClick="Regresar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAdicionarLibro"
+        tools:ignore="MissingConstraints,OnClick" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
