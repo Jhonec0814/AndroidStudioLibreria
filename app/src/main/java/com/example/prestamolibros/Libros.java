@@ -53,61 +53,24 @@ public class Libros extends AppCompatActivity {
             jetCodigoGaleriaLibro.requestFocus();
         }else {
 
+            SqlConexion admin1 = new SqlConexion(this, "libreria.db", null, 1);
+            SQLiteDatabase escribir = admin1.getWritableDatabase();
 
-            SqlConexion admin = new SqlConexion(this, "libreria.db", null, 1);
-            SQLiteDatabase leer = admin.getReadableDatabase();
-            Cursor libro = leer.rawQuery("select * from TblLibro where tituloLibro='" + nombreAutor + "'", null);
-
-
-            if (libro.moveToNext()) {
-                validacion1 = true;
-            }
-
-            if(libro.moveToNext()){
-                if ("si".equals(libro.getString(5))) {
-                    validacion2 = true;
-                }
-            }
-
-            leer.close();
-
-
-            if (validacion1 == true) {
-                if (validacion2 == true) {
-                    SqlConexion admin1 = new SqlConexion(this, "libreria.db", null, 1);
-                    SQLiteDatabase escribir = admin1.getWritableDatabase();
-
-                    ContentValues registro = new ContentValues();
-                    registro.put("codigoLibro", codigo);
-                    registro.put("tituloLibro", titulo);
-                    registro.put("autor", nombreAutor);
-                    registro.put("genero", genero);
-                    resp = escribir.insert("TblLibro", null, registro);
-                    if (resp > 0) {
-
-                        Toast.makeText(this, "Libro guardado", Toast.LENGTH_SHORT).show();
-
-                        ContentValues registroAnulado = new ContentValues();
-                        registroAnulado.put("codigoLibro", codigo);
-                        registroAnulado.put("activo", "no");
-                        respAnulado = escribir.update("TblLibro", registroAnulado, "codigoLibro='" + codigo + "'", null);
-                        if (respAnulado > 0) {
-                            Toast.makeText(this, "Libro anulado", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(this, "Error al anular el Libro", Toast.LENGTH_SHORT).show();
-                        }
-                        Limpiar_campos();
-                    } else {
-                        Toast.makeText(this, "Error en guardar el libro", Toast.LENGTH_SHORT).show();
-                    }
-                    escribir.close();
-                } else {
-                    Toast.makeText(this, "El libro no esta disponible", Toast.LENGTH_SHORT).show();
-                }
+            ContentValues registro = new ContentValues();
+            registro.put("codigoLibro", codigo);
+            registro.put("tituloLibro", titulo);
+            registro.put("autor", nombreAutor);
+            registro.put("genero", genero);
+            resp = escribir.insert("TblLibro", null, registro);
+            if (resp > 0) {
+                Toast.makeText(this, "Libro guardado", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "El libro no se encuentra registrado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Error en guardar el libro", Toast.LENGTH_SHORT).show();
             }
-        }   }
+            escribir.close();
+
+        }
+    }
 
 
 
