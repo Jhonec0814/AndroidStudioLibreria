@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PrestamoLibros">
         <activity
+            android:name=".prestamo"
+            android:exported="false" />
+        <activity
             android:name=".Libros"
             android:exported="false" />
         <activity

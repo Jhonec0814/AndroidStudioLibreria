@@ -13,64 +13,65 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Prestamos extends AppCompatActivity {
+public class prestamo extends AppCompatActivity {
 
-    TextView jtvPrestamo;
-    EditText jetCodigoPrestamo, jetFecha, jetNombreCliente,jetCodigoLibro,jetTituloLibro;
-    Button jbtnAdicionarPrestamos, jbtnConsultarPrestamos, jbtnModificar, jbtnEliminar , jbtnRegresarPrestamos;
-    String codigo, fecha, nombreCliente, codigoLibro,tituloLibro;
+    EditText jetCodigoPrestamo,jetFecha,jetNombreCliente,jetCodigoLibro;
+    Button jbtnAdicionar,jbtnConsultar,jbtnModificar,jbtnEliminar,jbtnRegresar;
+    String codigoPrestamo, fecha, nombreCliente, codigoLibro;
     long sw, resp, respAnulado;
     boolean existeLibro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_prestamos);
+        setContentView(R.layout.activity_prestamo);
+
         getSupportActionBar().hide();
 
-        jtvPrestamo = findViewById(R.id.tvPrestamo);
-        jetCodigoPrestamo = findViewById(R.id.etCodigoPrestamo);
-        jetFecha = findViewById(R.id.etFecha);
-        jetNombreCliente = findViewById(R.id.etNombreCliente);
-        jetCodigoLibro = findViewById(R.id.etCodigoLibro);
-        jbtnAdicionarPrestamos = findViewById(R.id.btnAdicionarPrestamos);
-        jbtnConsultarPrestamos = findViewById(R.id.btnConsultarPrestamos);
-        jbtnModificar = findViewById(R.id.btnModificar);
-        jbtnEliminar = findViewById(R.id.btnEliminar);
-        jbtnRegresarPrestamos = findViewById(R.id.btnRegresarPrestamos);
-        jetTituloLibro = findViewById(R.id.etTituloLibro);
-        existeLibro=false;
+        jetCodigoPrestamo=findViewById(R.id.etCodigoPrestamo);
+        jetFecha=findViewById(R.id.etFecha);
+        jetNombreCliente=findViewById(R.id.etNombreCliente);
+        jetCodigoLibro=findViewById(R.id.etCodigoLibro);
+        jbtnAdicionar=findViewById(R.id.btnAdicionar);
+        jbtnConsultar=findViewById(R.id.btnConsultar);
+        jbtnModificar=findViewById(R.id.btnModificar);
+        jbtnEliminar=findViewById(R.id.btnEliminar);
+        jbtnRegresar=findViewById(R.id.btnRegresar);
+
+
+
+
+
     }
+    public void Adicionar(View view){
 
-    public void GuardarPrestamo(View view){
+        Toast.makeText(this, "entro", Toast.LENGTH_SHORT).show();
 
+        codigoPrestamo=jetCodigoPrestamo.getText().toString();
         fecha=jetFecha.getText().toString();
-        codigo=jetCodigoPrestamo.getText().toString();
         nombreCliente=jetNombreCliente.getText().toString();
         codigoLibro=jetCodigoLibro.getText().toString();
-        tituloLibro= jetTituloLibro.getText().toString();
 
-        if(fecha.isEmpty() || codigo.isEmpty() || nombreCliente.isEmpty() || codigoLibro.isEmpty()){
+        if(codigoPrestamo.isEmpty() || fecha.isEmpty() || nombreCliente.isEmpty() || codigoLibro.isEmpty()){
             Toast.makeText(this, "Todos los datos son requeridos", Toast.LENGTH_SHORT).show();
             jetCodigoPrestamo.requestFocus();
-        }else {
-
-            SqlConexion admin = new SqlConexion(this, "libreria.db", null, 1);
+        }else{
+            SqlConexion admin = new SqlConexion(this, "libreria1.db", null, 1);
             SQLiteDatabase leer = admin.getReadableDatabase();
-            Cursor libro = leer.rawQuery("select * from TblLibro where tituloLibro='" + tituloLibro + "'", null);
+           Cursor libro = leer.rawQuery("select * from TblLibro where codigoLibro='" +  codigoLibro + "'", null);
+
 
             if (libro.moveToNext()) {
                 existeLibro = true;
             }
             leer.close();
 
-
             if (existeLibro == true) {
-                SqlConexion admin1 = new SqlConexion(this, "libreria.db", null, 1);
+                SqlConexion admin1 = new SqlConexion(this, "libreria1.db", null, 1);
                 SQLiteDatabase escribir = admin1.getWritableDatabase();
 
                 ContentValues registro = new ContentValues();
-                registro.put("codigoPrestamo", codigo);
+                registro.put("codigoPrestamo", codigoPrestamo);
                 registro.put("fecha", fecha);
                 registro.put("nomCliente", nombreCliente);
                 registro.put("codigoLibro", codigoLibro);
@@ -79,15 +80,19 @@ public class Prestamos extends AppCompatActivity {
 
                     Toast.makeText(this, "Prestamo guardado", Toast.LENGTH_SHORT).show();
 
+                    SqlConexion admin2 = new SqlConexion(this, "libreria1.db", null, 1);
+                    SQLiteDatabase escribir2 = admin2.getWritableDatabase();
+
                     ContentValues registroAnulado = new ContentValues();
                     registroAnulado.put("codigoLibro", codigoLibro);
                     registroAnulado.put("activo", "no");
-                    respAnulado = escribir.update("TblLibro", registroAnulado, "codigoLibro='" + codigoLibro + "'", null);
+                    respAnulado = escribir2.update("TblLibro", registroAnulado, "codigoLibro='" + codigoLibro + "'", null);
                     if (respAnulado > 0) {
                         Toast.makeText(this, "libro anulado", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, "Error al anular el libro", Toast.LENGTH_SHORT).show();
                     }
+                    escribir2.close();
                     Limpiar_campos();
                 } else {
                     Toast.makeText(this, "Error en guardar el prestamo", Toast.LENGTH_SHORT).show();
@@ -95,6 +100,7 @@ public class Prestamos extends AppCompatActivity {
                 escribir.close();
             }//si existe el libro
         }
+
     }
 
 
@@ -105,15 +111,15 @@ public class Prestamos extends AppCompatActivity {
 
     public void ConsultarPrestamo(){
 
-        codigo=jetCodigoPrestamo.getText().toString();
-        if (codigo.isEmpty()){
+        codigoPrestamo=jetCodigoPrestamo.getText().toString();
+        if (codigoPrestamo.isEmpty()){
             Toast.makeText(this, "El codigo del prestamo es necesario", Toast.LENGTH_SHORT).show();
             jetCodigoPrestamo.requestFocus();
         }
         else{
-            SqlConexion admin=new SqlConexion(this,"libreria.db",null,1);
+            SqlConexion admin=new SqlConexion(this,"libreria1.db",null,1);
             SQLiteDatabase db=admin.getReadableDatabase();
-            Cursor fila=db.rawQuery("select * from TblPrestamo where codigoPrestamo='" + codigo + "'",null);
+            Cursor fila=db.rawQuery("select * from TblPrestamo where codigoPrestamo='" + codigoPrestamo + "'",null);
             if (fila.moveToNext()){
                 sw=1;
                 jetFecha.setText(fila.getString(1));
@@ -127,11 +133,11 @@ public class Prestamos extends AppCompatActivity {
     }
 
 
-        public void AnularPrestamo(View view){
+    public void AnularPrestamo(View view){
         ConsultarPrestamo();
         if (sw == 1){
             String identificacion=jetCodigoPrestamo.getText().toString();
-            SqlConexion admin=new SqlConexion(this,"libreria.db",null,1);
+            SqlConexion admin=new SqlConexion(this,"libreria1.db",null,1);
             SQLiteDatabase db=admin.getWritableDatabase();
             ContentValues dato=new ContentValues();
             dato.put("codigoPrestamo",identificacion);
@@ -155,13 +161,15 @@ public class Prestamos extends AppCompatActivity {
     public void Limpiar_campos(){
         sw=0;
         jetCodigoPrestamo.setText("");
-        jetTituloLibro.setText("");
         jetNombreCliente.setText("");
         jetFecha.setText("");
         jetCodigoPrestamo.requestFocus();
     }
     public void RegresarPrestamo(View view){
-        Intent main = new Intent(this, MainActivity.class);
+       Intent main = new Intent(this, MainActivity.class);
         startActivity(main);
     }
+
+
+
 }

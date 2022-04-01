@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void abrirPrestamos(View view){
-        Intent prestamos = new Intent(this,Prestamos.class);
+        Intent prestamos = new Intent(this,prestamo.class);
         startActivity(prestamos);
     }
 

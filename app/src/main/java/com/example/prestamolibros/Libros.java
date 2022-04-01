@@ -53,7 +53,7 @@ public class Libros extends AppCompatActivity {
             jetCodigoGaleriaLibro.requestFocus();
         }else {
 
-            SqlConexion admin1 = new SqlConexion(this, "libreria.db", null, 1);
+            SqlConexion admin1 = new SqlConexion(this, "libreria1.db", null, 1);
             SQLiteDatabase escribir = admin1.getWritableDatabase();
 
             ContentValues registro = new ContentValues();
@@ -89,7 +89,7 @@ public class Libros extends AppCompatActivity {
             jetCodigoGaleriaLibro.requestFocus();
         }
         else{
-            SqlConexion admin=new SqlConexion(this,"libreria.db",null,1);
+            SqlConexion admin=new SqlConexion(this,"libreria1.db",null,1);
             SQLiteDatabase db=admin.getReadableDatabase();
             Cursor fila=db.rawQuery("select * from TblLibro where codigoLibro='" + codigo + "'",null);
             if (fila.moveToNext()){
