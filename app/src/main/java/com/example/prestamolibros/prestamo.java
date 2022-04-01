@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class prestamo extends AppCompatActivity {
 
     EditText jetCodigoPrestamo,jetFecha,jetNombreCliente,jetCodigoLibro;
-    Button jbtnAdicionar,jbtnConsultar,jbtnModificar,jbtnEliminar,jbtnRegresar;
+    Button jbtnAdicionar,jbtnConsultar,jbtnEliminar,jbtnRegresar;
     String codigoPrestamo, fecha, nombreCliente, codigoLibro;
     long sw, resp, respAnulado;
     boolean existeLibro;
@@ -34,7 +34,6 @@ public class prestamo extends AppCompatActivity {
         jetCodigoLibro=findViewById(R.id.etCodigoLibro);
         jbtnAdicionar=findViewById(R.id.btnAdicionar);
         jbtnConsultar=findViewById(R.id.btnConsultar);
-        jbtnModificar=findViewById(R.id.btnModificar);
         jbtnEliminar=findViewById(R.id.btnEliminar);
         jbtnRegresar=findViewById(R.id.btnRegresar);
 
@@ -45,7 +44,6 @@ public class prestamo extends AppCompatActivity {
     }
     public void Adicionar(View view){
 
-        Toast.makeText(this, "entro", Toast.LENGTH_SHORT).show();
 
         codigoPrestamo=jetCodigoPrestamo.getText().toString();
         fecha=jetFecha.getText().toString();
@@ -75,10 +73,18 @@ public class prestamo extends AppCompatActivity {
                 registro.put("fecha", fecha);
                 registro.put("nomCliente", nombreCliente);
                 registro.put("codigoLibro", codigoLibro);
-                resp = escribir.insert("TblPrestamo", null, registro);
+
+                ConsultarPrestamo();
+                if(sw==1){
+                    sw=0;
+                    resp=escribir.update("TblPrestamo", registro, "codigoPrestamo='"+codigoPrestamo+"'", null);
+                }else{
+                    resp = escribir.insert("TblPrestamo", null, registro);
+                }
+
                 if (resp > 0) {
 
-                    Toast.makeText(this, "Prestamo guardado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Guardado con exito", Toast.LENGTH_SHORT).show();
 
                     SqlConexion admin2 = new SqlConexion(this, "libreria1.db", null, 1);
                     SQLiteDatabase escribir2 = admin2.getWritableDatabase();
@@ -86,6 +92,7 @@ public class prestamo extends AppCompatActivity {
                     ContentValues registroAnulado = new ContentValues();
                     registroAnulado.put("codigoLibro", codigoLibro);
                     registroAnulado.put("activo", "no");
+
                     respAnulado = escribir2.update("TblLibro", registroAnulado, "codigoLibro='" + codigoLibro + "'", null);
                     if (respAnulado > 0) {
                         Toast.makeText(this, "libro anulado", Toast.LENGTH_SHORT).show();
